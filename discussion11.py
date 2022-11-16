@@ -39,12 +39,13 @@ def create_species_table(cur, conn):
 # TASK 1
 # CREATE TABLE FOR PATIENTS IN DATABASE
 def create_patients_table(cur, conn):
-    pass
+    cur.execute("CREATE TABLE IF NOT EXISTS patients (name TEXT, species TEXT, age INTEGER, cuteness INTEGER, agressiveness INTEGER)")
+    conn.commit()
 
 
 # ADD FLUFFLE TO THE TABLE
-def add_fluffle(cur, conn):
-    pass
+
+
     
 
 # TASK 2
@@ -59,13 +60,27 @@ def add_pets_from_json(filename, cur, conn):
     json_data = json.loads(file_data)
 
     # THE REST IS UP TO YOU
-    pass
+    data = json.loads(file_data)
+    for item in data:
+        n = item['name']
+        specie = item['species']
+        age = item['age']
+        cute = item['cuteness']
+        agressive = item['agressiveness']
+        cur.execute(
+            """ 
+            INSERT OR IGNORE INTO patients (name, species, age, cuteness, agressiveness)
+            VALUES (?, ?, ?, ?, ?, ?)
+            """,
+            (n, specie, age, cute, agressive)
+        )
+    conn.commit()
 
 
 # TASK 3
 # CODE TO OUTPUT NON-AGGRESSIVE PETS
 def non_aggressive_pets(aggressiveness, cur, conn):
-    pass
+    
 
 
 
